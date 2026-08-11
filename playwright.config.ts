@@ -3,6 +3,8 @@ import 'dotenv/config';
 
 export default defineConfig({
   testDir: './tests',
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
   use: {
     baseURL: process.env.FLUXO_BASE_URL,
     trace: 'on-first-retry',

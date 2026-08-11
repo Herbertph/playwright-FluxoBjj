@@ -1,24 +1,37 @@
 name: Playwright Tests
+
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: 20
+        cache: npm
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install --with-deps chromium
+
     - name: Run Playwright tests
+      env:
+        FLUXO_BASE_URL: ${{ secrets.FLUXO_BASE_URL }}
+        FLUXO_USER: ${{ secrets.FLUXO_USER }}
+        FLUXO_PASS: ${{ secrets.FLUXO_PASS }}
       run: npx playwright test
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
