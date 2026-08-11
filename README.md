@@ -1,6 +1,6 @@
 # FLUXO — E2E Test Suite
 
-<!-- Paste your badge here: Actions → Playwright Tests → ... → Create status badge -->
+[![Playwright Tests](https://github.com/Herbertph/playwright-FluxoBjj/actions/workflows/playwright.yml/badge.svg)](https://github.com/Herbertph/playwright-FluxoBjj/actions/workflows/playwright.yml)
 
 End-to-end test suite for [FLUXO](https://fluxo-production-052e.up.railway.app), a web application that maps Brazilian Jiu-Jitsu positions and lets practitioners chain them into sequences and log training.
 
