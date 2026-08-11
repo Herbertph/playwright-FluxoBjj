@@ -25,6 +25,12 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps chromium
 
+    - name: Check environment
+      run: |
+        echo "BASE_URL set: ${{ secrets.FLUXO_BASE_URL != '' }}"
+        echo "USER set: ${{ secrets.FLUXO_USER != '' }}"
+        echo "PASS set: ${{ secrets.FLUXO_PASS != '' }}"  
+
     - name: Run Playwright tests
       env:
         FLUXO_BASE_URL: ${{ secrets.FLUXO_BASE_URL }}
