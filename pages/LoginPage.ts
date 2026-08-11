@@ -10,7 +10,7 @@ export class LoginPage {
   constructor(page: Page) {
     this.page = page;
     // cole aqui os locators que o codegen gerou
-    this.emailInput = page.getByLabel('Email');
+    this.emailInput = page.getByLabel('E-mail');
     this.passwordInput = page.getByLabel('Senha');
     this.submitButton = page.getByRole('button', { name: /entrar|login/i });
     this.errorMessage = page.getByRole('alert');

@@ -12,7 +12,7 @@ test.describe('Autenticação', () => {
   });
 
   test('FLX-AUTH-03: rota protegida redireciona sem sessão', async ({ page }) => {
-    await page.goto('/dashboard'); // ajuste para uma rota real
+    await page.goto('/app'); 
     await expect(page).toHaveURL(/login/);
   });
 });
