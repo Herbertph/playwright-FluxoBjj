@@ -14,9 +14,9 @@ This repository is as much about **test design decisions** as it is about the te
 
 | Area | Cases | Status |
 |------|-------|--------|
-| Authentication | 3 | Passing |
+| Authentication | 4 | 3 passing; FLX-AUTH-04 (logout) added, first credentialed run pending in CI |
 | Public marketing page | 3 | Passing |
-| Internationalisation (PT/EN) | 1 | Passing |
+| Internationalisation (PT/EN) | 1 | Passing (switch + survives navigation) |
 | Sequence building | 2 | Skipped — see [Known limitations](#known-limitations) |
 
 ---

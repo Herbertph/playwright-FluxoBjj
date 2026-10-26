@@ -86,6 +86,7 @@ A "no" on criteria 4 or 5 rules the candidate out regardless of the rest.
 
 *Expected:* return to the unauthenticated state; protected route inaccessible.
 *Priority:* Medium
+*Note:* logs in fresh inside the test rather than reusing the saved session, so ending the session cannot invalidate the state shared by the authenticated specs.
 
 ### Sequences
 
@@ -128,6 +129,29 @@ A "no" on criteria 4 or 5 rules the candidate out regardless of the rest.
 1. Trigger the training log for the current day.
 
 *Expected:* the entry is reflected in the interface against today's date.
+*Priority:* Medium
+
+### Public marketing page
+
+**FLX-HOME-01 — Home page loads**
+*Precondition:* no session.
+1. Open the home page through the configured base URL.
+
+*Expected:* the page title contains "FLUXO".
+*Priority:* Medium
+
+**FLX-HOME-02 — Main calls to action visible**
+*Precondition:* no session, default language.
+1. Open the home page.
+
+*Expected:* the main heading and the "Começar agora" and "Ver planos" links are visible.
+*Priority:* Medium
+
+**FLX-HOME-03 — Pricing reachable from the home page**
+*Precondition:* no session.
+1. Follow the "Ver planos" link.
+
+*Expected:* the pricing page opens.
 *Priority:* Medium
 
 ### Internationalisation
