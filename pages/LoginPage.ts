@@ -9,11 +9,12 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    // cole aqui os locators que o codegen gerou
     this.emailInput = page.getByLabel('E-mail');
     this.passwordInput = page.getByLabel('Senha');
     this.submitButton = page.getByRole('button', { name: /entrar|login/i });
-    this.errorMessage = page.getByRole('alert');
+    // Not getByRole('alert'): the only alert on the page is Next.js's empty
+    // route announcer, which made FLX-AUTH-02 pass with no error shown.
+    this.errorMessage = page.getByText('E-mail ou senha inválidos.');
   }
 
   async goto() {
