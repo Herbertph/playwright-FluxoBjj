@@ -46,11 +46,12 @@ In CI these come from repository secrets. **Never commit `.env` or real credenti
 playwright.config.ts   3 projects: setup, public, auth (see below)
 pages/                 Page objects: locators + actions, NO assertions
   LoginPage.ts         login form
+  AppHeader.ts         logout button, "Entrar" link
   MindMapPage.ts       position map, sequence save, "Treinei hoje"
 tests/
   auth.setup.ts        logs in once, saves playwright/.auth/user.json
-  auth.public.spec.ts  FLX-AUTH-02, FLX-AUTH-03
-  home.public.spec.ts  marketing page + PT/EN switch
+  auth.public.spec.ts  FLX-AUTH-02, -03, -04 (logout, fresh login)
+  home.public.spec.ts  FLX-HOME-01..03, FLX-I18N-01
   sequence.auth.spec.ts FLX-SEQ-01/02 (both test.skip, see Known gaps)
 docs/
   test-plan.md         product model, triage, case catalogue (FLX-* IDs)
@@ -71,7 +72,7 @@ All files are small (under 200 lines); `docs/test-plan.md` is the largest and th
 - **Locators**: `getByRole` with name first, then `getByLabel`, `getByText`, `getByTestId`; CSS/XPath last resort. See `docs/locators.md`.
 - **No fixed waits** (`waitForTimeout`). Wait on visible elements or URL changes.
 - **Page objects hold no assertions**; assertions live in specs.
-- **Case IDs**: `FLX-<AREA>-<NN>` (AUTH, SEQ, CAT, DIA, I18N, SUB) matching `docs/test-plan.md`. Put the ID at the start of the test title.
+- **Case IDs**: `FLX-<AREA>-<NN>` (AUTH, HOME, SEQ, CAT, DIA, I18N, SUB) matching `docs/test-plan.md`. Put the ID at the start of the test title.
 - **Test independence**: every case creates its own data and cleans up what it writes. The suite runs against the *deployed production app* with a dedicated account, so anything a test writes lands in a real database.
 - Use relative URLs (`page.goto('/')`) so `FLUXO_BASE_URL` controls the target.
 - The FLUXO UI is in Portuguese by default; locators use PT copy (`Entrar`, `Senha`, `Ver planos`). Some existing titles and identifiers are PT, some EN; new code, titles and comments should be in English.
@@ -81,8 +82,9 @@ All files are small (under 200 lines); `docs/test-plan.md` is the largest and th
 ## Known gaps (from the current code)
 
 - FLX-SEQ-01/02 are skipped: map nodes have no stable test attributes and their accessible name mixes title and description. Enabling them needs a change in the FLUXO app itself.
-- Cases in `docs/test-plan.md` not automated yet: FLX-AUTH-04 (logout), FLX-SEQ-03 (delete), FLX-CAT-01, FLX-DIA-01, FLX-SUB-01, and the "survives navigation" part of FLX-I18N-01.
-- `home.public.spec.ts` first test hard-codes the production URL instead of `/`, and its tests have no FLX IDs.
+- Cases in `docs/test-plan.md` not automated yet: FLX-SEQ-03 (delete), FLX-CAT-01, FLX-DIA-01, FLX-SUB-01.
+- The FLX-AUTH-02 error locator uses PT copy because the FLUXO login error has no `role="alert"` (the only alert on `/login` is Next.js's empty route announcer, so never use `getByRole('alert')` there).
+- Logout tests must log in fresh, never with the shared `storageState`: logging out could invalidate the session every `*.auth.spec.ts` test reuses.
 - `auth.setup.ts` duplicates the login steps instead of using `LoginPage`; some comments are leftover PT TODOs.
 
 ## Definition of done
